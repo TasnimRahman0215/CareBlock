@@ -1,41 +1,28 @@
-const crypto = require('crypto');
-const Patient = require('../models/patient'); // Assuming you have a Patient model
+const Patient = require('../models/patient');
 
-// AES encryption key (should be securely stored in production)
-const aesKey = crypto.randomBytes(32); // 256-bit key
-
-// Function to encrypt data
-function encryptWithAES(data, key) {
-    const iv = crypto.randomBytes(16); // Random IV
-    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-    const jsonString = JSON.stringify(data); // Convert JSON to string
-    let encrypted = cipher.update(jsonString, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    return { encryptedData: encrypted, iv: iv.toString('hex') };
+// POST /api/patients
+async function addPatient(req, res) {
+  try {
+    const { patientId, name } = req.body;
+    const clinicId = req.header('x-clinic-id');
+    const p = await Patient.create({ patientId, name, clinicId });
+    return res.status(201).json(p);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to add patient.' });
+  }
 }
 
-// POST route to add a new patient
-const addPatient = async (req, res) => {
-    try {
-        const patientData = req.body; // Get patient data from request body
+// GET /api/patients
+async function listPatients(req, res) {
+  try {
+    const clinicId = req.header('x-clinic-id');
+    const list = await Patient.find({ clinicId });
+    return res.json(list);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to list patients.' });
+  }
+}
 
-        // Encrypt the patient data
-        const { encryptedData, iv } = encryptWithAES(patientData, aesKey);
-
-        // Create a new patient document
-        const newPatient = new Patient({
-            encryptedData,
-            iv,
-        });
-
-        // Save the patient document to MongoDB
-        await newPatient.save();
-
-        res.status(201).json({ message: 'Patient data encrypted and stored successfully.' });
-    } catch (error) {
-        console.error('Error adding patient:', error);
-        res.status(500).json({ error: 'Failed to add patient.' });
-    }
-};
-
-module.exports = { addPatient };
+module.exports = { addPatient, listPatients };

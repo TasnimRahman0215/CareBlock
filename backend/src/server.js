@@ -1,20 +1,26 @@
-const express = require('express');
-const connectDB = require('./connect.js'); // Import the database connection
-const patientRoutes = require('./routes/patientRoute.js'); // Import your routes
+// backend/src/server.js
+require('dotenv').config();
 
-const dotenv = require('dotenv');
-const result = dotenv.config({ path: './backend/.env' });
+const express   = require('express');
+const cors      = require('cors');
+const connectDB = require('./connect');
+const api       = require('./routes/patientRoute.js');
+
+console.log('MONGO_URI=', process.env.MONGO_URI);
+console.log('DATA_KEY=', process.env.DATA_KEY?.slice(0,8) + '…');
+console.log('JWT_SECRET=', process.env.JWT_SECRET);
+console.log('PORT=', process.env.PORT);
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 // Connect to MongoDB
-console.log('MONGO_URI:', process.env.MONGO_URI);
 connectDB(process.env.MONGO_URI);
 
-app.use(express.json()); // Middleware to parse JSON
-app.use('/api', patientRoutes); // Use patient routes
+app.use('/api', api);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
