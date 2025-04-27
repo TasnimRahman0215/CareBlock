@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Dashboard     from "./Dashboard";
+import PatientLookup from "./PatientLookup";
+import { contract, account } from "./ethLocal";
+import "./App.css";
 
-function App() {
+const API_URL   = process.env.REACT_APP_API_URL;
+const CLINIC_ID = "680d4d39f835c16d56cebb82";          // ← your seeded clinicId
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Dashboard
+              account={account}
+              contract={contract}
+              apiUrl={API_URL}
+              clinicId={CLINIC_ID}
+            />
+          }
+        />
+        <Route
+          path="/lookup"
+          element={
+            <PatientLookup
+              apiUrl={API_URL}
+              clinicId={CLINIC_ID}
+              onSelect={(pat) => {
+                localStorage.setItem("preselect", pat.patientId);
+                window.location.href = "/";
+              }}
+            />
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;

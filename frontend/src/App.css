@@ -1,38 +1,125 @@
-.App {
-  text-align: center;
+/* ─────────── COLOR PALETTE ─────────── */
+:root {
+  --blue-50 : #e8f3ff;
+  --blue-100: #d0e7ff;
+  --blue-600: #1f75d9;
+  --blue-700: #195ec5;
+  --text-700: #132144;
+  --border  : #cbd5e1;
+  --shadow  : rgba(0, 0, 0, 0.08);
+  --radius  : 10px;
+  --dur     : 180ms;
+}
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: var(--blue-50);
+  color: var(--text-700);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* ─────────── LAYOUT SHELL ─────────── */
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ───── SIDEBAR ───── */
+.sidebar {
+  background: white;
+  border-right: 1px solid var(--border);
+  padding: 1.25rem 1rem;
+  box-shadow: 2px 0 6px var(--shadow);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.3px;
+}
+.patient-item {
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--dur);
+}
+.patient-item:hover {
+  background: var(--blue-100);
+}
+.patient-item.active {
+  background: var(--blue-600);
   color: white;
+  font-weight: 600;
 }
 
-.App-link {
-  color: #61dafb;
+/* ───── MAIN PANEL ───── */
+.main {
+  padding: 1.75rem 2.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* ───── NEW-RECORD FORM ───── */
+.record-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.record-form input {
+  flex: 1 1 180px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+}
+.record-form button {
+  background: var(--blue-600);
+  border: none;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background var(--dur), transform var(--dur);
+}
+.record-form button:hover {
+  background: var(--blue-700);
+  transform: translateY(-1px);
+}
+.record-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ───── HISTORY LIST ───── */
+.record-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+.record-item {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 8px var(--shadow);
+  transition: transform var(--dur), box-shadow var(--dur);
+}
+.record-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--shadow);
+}
+.record-item em {
+  font-size: 0.85rem;
+  color: #5f718c;
 }
