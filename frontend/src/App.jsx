@@ -5,6 +5,7 @@ import LoginButton           from './loginButton';
 import LogoutButton          from './logoutButton';
 import Dashboard             from './Dashboard';
 import axios                 from 'axios';
+import './App.css';
 
 export default function App() {
   const {
@@ -32,12 +33,67 @@ export default function App() {
 
   if (!isAuthenticated) {
     return (
-      <div style={{ textAlign: 'center', marginTop: 50 }}>
-        <LoginButton onClick={() => loginWithRedirect()} />
-        <div style={{ marginTop: '1rem' }}>
-          <LogoutButton />
-        </div>
+      <div className="login-container">
+        {/* Moving circles in the background */}
+        <div class="moving-cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+  <div class="moving-cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+  <div class="moving-cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+  <div class="moving-cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+  <div class="moving-cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>  <div class="moving-cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+      <div className="login-box">
+      <img src="./CareBlock_logo.png" alt="Logo" className="logo" />
+        <h1>Welcome to CareBlock</h1>
+        <p style={{ marginBottom: '1.5rem', color: '#555' }}>
+          Revolutionizing healthcare with blockchain technology.
+        </p>
+        <button className="login-button" onClick={() => loginWithRedirect()}>
+          Login/Register
+        </button>
+        <LogoutButton />
       </div>
+    </div>
     );
   }
 

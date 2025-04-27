@@ -1,38 +1,111 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Styling for the login page */
+.login-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+  background: linear-gradient(135deg, #6b9fc4, #a2bdd3);
+  background-size: 400% 400%;
+  animation: gradientAnimation 10s ease infinite;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  overflow: hidden;
+  perspective: 1500px; /* Stronger 3D perspective */
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 3D Blockchain Cubes */
+.moving-cube {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+  animation: spinCube 8s linear infinite, floatCube 12s ease-in-out infinite alternate;
+}
+
+.moving-cube div {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+/* Create six sides of the cube */
+.moving-cube .front  { transform: translateZ(30px); }
+.moving-cube .back   { transform: rotateY(180deg) translateZ(30px); }
+.moving-cube .right  { transform: rotateY(90deg) translateZ(30px); }
+.moving-cube .left   { transform: rotateY(-90deg) translateZ(30px); }
+.moving-cube .top    { transform: rotateX(90deg) translateZ(30px); }
+.moving-cube .bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+/* Different starting positions */
+.moving-cube:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.moving-cube:nth-child(2) { top: 20%; left: 90%; animation-delay: 0s; }
+.moving-cube:nth-child(3) { top: 50%; left: 10%; animation-delay: 0s; }
+.moving-cube:nth-child(4) { top: 80%; left: 20%; animation-delay: 0s; }
+.moving-cube:nth-child(5) { top: 90%; left: 10%; animation-delay: 0s; }
+.moving-cube:nth-child(6) { top: 90%; left: 90%; animation-delay: 0s; }
+
+@keyframes spinCube {
+  0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+@keyframes floatCube {
+  0% { transform: translateY(0px) translateX(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: translateY(-150px) translateX(100px) rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+/* Login Box */
+.login-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 420px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.logo {
+  width: 140px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.login-button {
+  background: linear-gradient(135deg, #64b5f6, #09253b);
   color: white;
+  border: none;
+  padding: 0.9rem 2.5rem;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
